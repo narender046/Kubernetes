@@ -2,6 +2,6 @@
 
 kubectl version --client && kubeadm version
 
-docker -v 
+docker version
 
 kubelet --version
