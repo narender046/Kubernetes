@@ -1,0 +1,7 @@
+# This is to check the status of the installation of the kubelet, kubeadm, kubectl and docker (container runtime)
+
+kubectl version --client && kubeadm version
+
+docker -v 
+
+kubelet --version
