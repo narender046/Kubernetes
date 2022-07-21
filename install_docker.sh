@@ -62,3 +62,20 @@ EOF
 sudo systemctl daemon-reload 
 sudo systemctl restart docker
 sudo systemctl enable docker
+
+# Step 8: Initialize Kubernetes on Master Node
+
+sudo kubeadm init --pod-network-cidr=10.244.0.0/16
+mkdir -p $HOME/.kube
+sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
+sudo chown $(id -u):$(id -g) $HOME/.kube/config
+
+# Deploy Pod Network to Cluster
+
+sudo kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml
+kubectl get pods --all-namespaces
+
+# Join Worker Node to Cluster
+
+kubeadm join --discovery-token abcdef.1234567890abcdef --discovery-token-ca-cert-hash sha256:1234..cdef 1.2.3.4:6443
+kubectl get nodes
